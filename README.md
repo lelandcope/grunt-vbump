@@ -1,16 +1,18 @@
-# grunt-bump
+# grunt-vbump
 
 **Bump package version, create tag, commit, push...**
+
+Based on vojtajina [grunt-bump](https://github.com/vojtajina/grunt-bump)
 
 ## Installation
 
 Install npm package, next to your project's `Gruntfile.js` file:
 
-    npm install grunt-bump --save-dev
+    npm install grunt-vbump --save-dev
 
 Add this line to your project's `Gruntfile.js`:
 
-    grunt.loadNpmTasks('grunt-bump');
+    grunt.loadNpmTasks('grunt-vbump');
 
 
 ## Usage
@@ -18,37 +20,37 @@ Add this line to your project's `Gruntfile.js`:
 Let's say current version is `0.0.1`.
 
 ````
-$ grunt bump
+$ grunt vbump
 >> Version bumped to 0.0.2
 >> Committed as "Release v0.0.2"
 >> Tagged as "v0.0.2"
 >> Pushed to origin
 
-$ grunt bump:patch
+$ grunt vbump:patch
 >> Version bumped to 0.0.3
 >> Committed as "Release v0.0.3"
 >> Tagged as "v0.0.3"
 >> Pushed to origin
 
-$ grunt bump:minor
+$ grunt vbump:minor
 >> Version bumped to 0.1.0
 >> Committed as "Release v0.1.0"
 >> Tagged as "v0.1.0"
 >> Pushed to origin
 
-$ grunt bump:major
+$ grunt vbump:major
 >> Version bumped to 1.0.0
 >> Committed as "Release v1.0.0"
 >> Tagged as "v1.0.0"
 >> Pushed to origin
 
-$ grunt bump:build
+$ grunt vbump:build
 >> Version bumped to 1.0.0-1
 >> Committed as "Release v1.0.0-1"
 >> Tagged as "v1.0.0-1"
 >> Pushed to origin
 
-$ grunt bump:git
+$ grunt vbump:git
 >> Version bumped to 1.0.0-1-ge96c
 >> Committed as "Release v1.0.0-1-ge96c"
 >> Tagged as "v1.0.0-1-ge96c"
@@ -58,19 +60,19 @@ $ grunt bump:git
 If you want to jump to an exact version, you can use the ```setversion``` tag in the command line.
 
 ```
-$ grunt bump --setversion=2.0.1
+$ grunt vbump --setversion=2.0.1
 >> Version bumped to 2.0.1
 >> Committed as "Release v2.0.1"
 >> Tagged as "v2.0.1"
 >> Pushed to origin
 ```
 
-Sometimes you want to run another task between bumping the version and commiting, for instance generate changelog. You can use `bump-only` and `bump-commit` to achieve that:
+Sometimes you want to run another task between bumping the version and commiting, for instance generate changelog. You can use `vbump-only` and `vbump-commit` to achieve that:
 
 ```bash
-$ grunt bump-only:minor
+$ grunt vbump-only:minor
 $ grunt changelog
-$ grunt bump-commit
+$ grunt vbump-commit
 ```
 
 ## Configuration
@@ -78,7 +80,7 @@ $ grunt bump-commit
 This shows all the available config options with their default values.
 
 ```js
-bump: {
+vbump: {
   options: {
     files: ['package.json'],
     updateConfigs: [],
@@ -102,7 +104,7 @@ List of files to bump. Maybe you wanna bump 'component.json' as well ?
 Sometimes you load the content of `package.json` into a grunt config. This will update the config property, so that even tasks running in the same grunt process see the updated value.
 
 ```js
-bump: {
+vbump: {
   files:         ['package.json', 'component.json'],
   updateConfigs: ['pkg',          'component']
 }
