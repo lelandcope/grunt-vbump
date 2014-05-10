@@ -1,37 +1,22 @@
 {
-  "name": "grunt-bump",
+  "name": "grunt-vbump",
   "description": "Bump package version",
-  "version": "0.0.13",
-  "homepage": "https://github.com/vojtajina/grunt-bump",
+  "version": "0.0.1",
+  "homepage": "https://github.com/lelandcope/grunt-vbump",
   "author": {
-    "name": "Vojta Jína",
-    "email": "vojta.jina@gmail.com"
+    "name": "Leland Cope",
+    "email": "lelandcoep@gamil.com"
   },
   "contributors": [
-    "Mathias Paumgarten <paumgarten@soapcreative.com>",
-    "Elfrey Shira <elfrey.shira@opower.com>",
-    "adam j. sontag <ajpiano@ajpiano.com>",
-    "travis4all <travis4all@diamon.dz>",
-    "Jonas Rabbe <jonas.rabbe@gmail.com>",
-    "Snugug <snugug@gmail.com>",
-    "angleman <angleman@users.noreply.github.com>",
-    "cattail <zhongchiyu@gmail.com>",
-    "Adam Biggs <adam.biggs@lightmaker.com>",
-    "ylesaout <ylesaout@gmail.com>",
-    "Gavin <gavin@kodekoan.com>",
-    "Mathias Paumgarten <mail@mathias-paumgarten.com>",
-    "Mayhem <stepien.nicolas@gmail.com>",
-    "Michael Hellein <themichaek@gmail.com>",
-    "RobinQu <robinqu@gmail.com>"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/vojtajina/grunt-bump.git"
+    "url": "git://github.com/lelandcope/grunt-vbump.git"
   },
   "bugs": {
-    "url": "https://github.com/vojtajina/grunt-bump/issues"
+    "url": "https://github.com/lelandcope/grunt-vbump/issues"
   },
-  "main": "tasks/bump.js",
+  "main": "tasks/vbump.coffee",
   "engines": {
     "node": ">= 0.8.0"
   },

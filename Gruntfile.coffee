@@ -16,6 +16,6 @@ module.exports = (grunt) ->
   grunt.registerTask 'release', 'Build, bump and publish to NPM.', (type) ->
     grunt.task.run [
       'npm-contributors',
-      "bump:#{type||'patch'}",
+      "vbump:#{type||'patch'}",
       'npm-publish'
     ]
