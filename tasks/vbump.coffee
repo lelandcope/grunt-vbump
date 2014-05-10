@@ -19,6 +19,7 @@ module.exports = (grunt)->
 
     grunt.registerTask 'vbump', DESC, (versionType = 'patch', incOrCommitOnly)->
         opts = @options
+            forceSameVersion:   true
             bumpVersion:        true
             files:              ['package.json']
             updateConfigs:      []
@@ -32,6 +33,7 @@ module.exports = (grunt)->
             pushTo:             ''
             gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d'
 
+        globalVersion       = null
         exactVersionToSet   = grunt.option 'setversion'
         VERSION_REGEXP      = /([\'|\"]?version[\'|\"]?[ ]*:[ ]*[\'|\"]?)([\d||A-a|.|-]*)([\'|\"]?)/i
 
@@ -57,8 +59,12 @@ module.exports = (grunt)->
                 version = null
 
                 content = grunt.file.read(file).replace VERSION_REGEXP, (match, prefix, parsedVersion, suffix)->
-                    version = exactVersionToSet or semver.inc parsedVersion, versionType
-                    version = version.replace /(-0)$/i, '' unless versionType is 'build'
+                    if opts.forceSameVersion and globalVersion
+                        version = globalVersion
+                    else
+                        version = exactVersionToSet or semver.inc parsedVersion, versionType
+                        version = version.replace /(-0)$/i, '' unless versionType is 'build'
+
                     prefix + version + suffix
 
                 grunt.fatal 'Can not find a version to bump in ' + file unless version
