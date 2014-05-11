@@ -10,28 +10,32 @@
     @author Leland Cope <lelandcope@gmail.com>
 ###
 
-semver  = require 'semver'
-cp      = require 'child_process'
-exec    = cp.exec
+semver      = require 'semver'
+cp          = require 'child_process'
+exec        = cp.exec
+inquirer    = require 'inquirer'
 
 module.exports = (grunt)->
     DESC = 'Increment the version, commit, tag and push.'
 
-    grunt.registerTask 'vbump', DESC, (versionType = 'patch', incOrCommitOnly)->
+    grunt.registerTask 'vbump', DESC, (versionType = 'build', incOrCommitOnly)->
         opts = @options
             forceSameVersion:   true
             bumpVersion:        true
             files:              ['package.json']
             updateConfigs:      []
             commit:             false
-            commitMessage:      'Release v%VERSION%'
+            commitMessage:      '%VERSION%: '
             commitFiles:        ['package.json'] # '-a' for all files
             createTag:          false
-            tagName:            'v%VERSION%'
+            tagName:            '%VERSION%'
             tagMessage:         'Version %VERSION%'
             push:               false
-            pushTo:             ''
+            pushTo:             'orgin'
             gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d'
+
+        for key, value of grunt.config ['vbump', versionType, 'options']
+            opts[key] = value
 
         globalVersion       = null
         exactVersionToSet   = grunt.option 'setversion'
@@ -53,7 +57,7 @@ module.exports = (grunt)->
             return
 
 
-
+        # Bump Version
         runIf opts.bumpVersion, ()->
             opts.files.forEach (file, idx)->
                 version = null
@@ -88,6 +92,47 @@ module.exports = (grunt)->
                     grunt.log.ok configProperty + '\'s version updated'
 
             next()
+
+
+        # Commit
+        runIf opts.commit, ()->
+            inquirer.prompt [
+                name: 'commitMessage'
+                message: 'Commit Message?'
+                default: ''
+            ], (answers)->
+                command = 'git commit ' + opts.commitFiles.join(' ') + ' -m "' + answers.commitMessage + '"'
+
+                exec command, (err, stdout, stderr)->
+                    grunt.fatal 'Can not create the commit:\n  ' + stderr if err
+
+                    grunt.log.ok 'Committed as "' + answers.commitMessage + '"'
+                    next()
+
+
+        # Tag
+        runIf opts.createTag, ()->
+            tagName     = opts.tagName.replace '%VERSION%', globalVersion
+            tagMessage  = opts.tagMessage.replace '%VERSION%', globalVersion
+            command     = 'git tag -a ' + tagName + ' -m "' + tagMessage + '"'
+
+            exec command, (err, stdout, stderr)->
+                grunt.fatal 'Can not create the tag:\n  ' + stderr if err
+
+                grunt.log.ok 'Tagged as "' + tagName + '"'
+                next()
+
+
+        # Push
+        runIf opts.push, ()->
+            command = 'git push ' + opts.pushTo + ' && git push ' + opts.pushTo + ' --tags'
+
+            exec command, (err, stdout, stderr)->
+                grunt.fatal 'Can not push to ' + opts.pushTo + ':\n  ' + stderr if err
+
+                grunt.log.ok 'Pushed to ' + opts.pushTo
+                next()
+
 
         # Start the Task
         next()

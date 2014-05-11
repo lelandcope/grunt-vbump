@@ -1,14 +1,13 @@
 {
   "name": "grunt-vbump",
   "description": "Bump package version",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "homepage": "https://github.com/lelandcope/grunt-vbump",
   "author": {
     "name": "Leland Cope",
     "email": "lelandcoep@gamil.com"
   },
-  "contributors": [
-  ],
+  "contributors": [],
   "repository": {
     "type": "git",
     "url": "git://github.com/lelandcope/grunt-vbump.git"
@@ -25,7 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "semver": "~1.1"
+    "semver": "~1.1",
+    "inquirer": "~0.4.1"
   },
   "peerDependencies": {
     "grunt": "~0.4"

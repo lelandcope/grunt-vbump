@@ -28,51 +28,27 @@ $ grunt vbump
 
 $ grunt vbump:patch
 >> Version bumped to 0.0.3
->> Committed as "Release v0.0.3"
->> Tagged as "v0.0.3"
+>> Committed as "Release 0.0.3"
+>> Tagged as "0.0.3"
 >> Pushed to origin
 
 $ grunt vbump:minor
 >> Version bumped to 0.1.0
->> Committed as "Release v0.1.0"
->> Tagged as "v0.1.0"
+>> Committed as "Release 0.1.0"
+>> Tagged as "0.1.0"
 >> Pushed to origin
 
 $ grunt vbump:major
 >> Version bumped to 1.0.0
->> Committed as "Release v1.0.0"
->> Tagged as "v1.0.0"
+>> Committed as "Release 1.0.0"
+>> Tagged as "1.0.0"
 >> Pushed to origin
 
 $ grunt vbump:build
 >> Version bumped to 1.0.0-1
->> Committed as "Release v1.0.0-1"
->> Tagged as "v1.0.0-1"
+>> Committed as "Release 1.0.0-1"
+>> Tagged as "1.0.0-1"
 >> Pushed to origin
-
-$ grunt vbump:git
->> Version bumped to 1.0.0-1-ge96c
->> Committed as "Release v1.0.0-1-ge96c"
->> Tagged as "v1.0.0-1-ge96c"
->> Pushed to origin
-````
-
-If you want to jump to an exact version, you can use the ```setversion``` tag in the command line.
-
-```
-$ grunt vbump --setversion=2.0.1
->> Version bumped to 2.0.1
->> Committed as "Release v2.0.1"
->> Tagged as "v2.0.1"
->> Pushed to origin
-```
-
-Sometimes you want to run another task between bumping the version and commiting, for instance generate changelog. You can use `vbump-only` and `vbump-commit` to achieve that:
-
-```bash
-$ grunt vbump-only:minor
-$ grunt changelog
-$ grunt vbump-commit
 ```
 
 ## Configuration
@@ -82,16 +58,16 @@ This shows all the available config options with their default values.
 ```js
 vbump: {
   options: {
+    forceSameVersion: true,
     files: ['package.json'],
     updateConfigs: [],
-    commit: true,
-    commitMessage: 'Release v%VERSION%',
+    commit: false,
     commitFiles: ['package.json'], // '-a' for all files
-    createTag: true,
-    tagName: 'v%VERSION%',
+    createTag: false,
+    tagName: '%VERSION%',
     tagMessage: 'Version %VERSION%',
     push: true,
-    pushTo: 'upstream',
+    pushTo: 'orgin',
     gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
   }
 }
@@ -113,14 +89,11 @@ vbump: {
 ### commit
 Do you wanna commit the changes ?
 
-### commitMessage
-If so, what is the commit message ? You can use `%VERSION%` which will get replaced with the new version.
-
 ### commitFiles
 An array of files that you wanna commit. You can use `['-a']` to commit all files.
 
 ### createTag
-Do you wanna create a tag ?
+Do you wanna create a tag?
 
 ### tagName
 If so, this is the name of that tag (`%VERSION%` placeholder is available).
@@ -129,7 +102,7 @@ If so, this is the name of that tag (`%VERSION%` placeholder is available).
 Yep, you guessed right, it's the message of that tag - description (`%VERSION%` placeholder is available).
 
 ### push
-Do you wanna push all these changes ?
+Do you wanna push all these changes?
 
 ### pushTo
-If so, which remote branch would you like to push to ?
+If so, which remote branch would you like to push to?
